@@ -158,17 +158,23 @@ var ace_values = function (cardValues)
     return total;
 }
 
+var myImage = '<img src="https://c.tenor.com/EnRojaH2AH4AAAAC/confused-meme.gif"/>';
+var winmage = '<img src="https://c.tenor.com/tZGM8sQwlFwAAAAC/spongebob-cant-wait.gif"/>';
+var tiemage = '<img src="https://c.tenor.com/SEguX7LvdTQAAAAC/launch-dragon-ball.gif"/>';
+
+
+
 var winning = function()
 {
 
 if (totalDeck_computer > 21)
 {
-  return `Computer LOST!!!`;
+  return `Computer LOST!!! ${myImage}`;
 }
 
 else if (totalDeck_player > 21)
 {
-  return `player LOST!!!`;
+  return `player LOST!!! ${myImage}`;
 }
 
 //   else if (totalDeck_computer <= 17)
@@ -182,16 +188,16 @@ else if (totalDeck_player > 21)
 // }
 else if (totalDeck_player > totalDeck_computer)
 {
-  return `Player Wins!!!! Congratulations!!!`;
+  return `Player Wins!!!! Congratulations!!! ${winmage}`;
 }
 else if (totalDeck_player < totalDeck_computer)
 {
-  return `Computer Wins!!! Congratulations!!!`;
+  return `Computer Wins!!! Congratulations!!! ${winmage}`;
 }
 
 else if (totalDeck_player == totalDeck_computer)
 {
-  return `Sadly, It is a tie!!!`;
+  return `Sadly, It is a tie!!! ${tiemage}`;
 }
 
 };
