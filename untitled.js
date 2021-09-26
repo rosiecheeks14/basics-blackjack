@@ -2,7 +2,7 @@
 var turn = "player";
 var player = [];
 var computer = [];
-
+// var cardValues = [];
 
 var makeDeck = function () {
   // Initialise an empty deck array
@@ -110,6 +110,18 @@ var values = function (cardValues) {
   return card_names;
 };
 
+//total cards of each players holding
+// var sum = function (cardValues) {
+//   var total = 0;
+//   for (var i = 0; i < cardValues.length; i++) {
+//     total += cardValues[i].rank;
+//   }
+//   return total;
+// };
+// ace values
+// after hit , if the total exceeds more than 10 then the ace rank (values) will be 1
+// if it doesnt exceed 10, the ace rank would be 11
+// by deafult ace is considered as one
 
 var ace_values = function (cardValues)
 {
@@ -155,7 +167,26 @@ var tiemage = '<img src="https://c.tenor.com/SEguX7LvdTQAAAAC/launch-dragon-ball
 var winning = function()
 {
 
- if (totalDeck_player > totalDeck_computer)
+if (totalDeck_computer > 21)
+{
+  return `Computer LOST!!! ${myImage}`;
+}
+
+else if (totalDeck_player > 21)
+{
+  return `player LOST!!! ${myImage}`;
+}
+
+//   else if (totalDeck_computer <= 17)
+// {
+//   cardMembers(computer);
+//   computer_card = values(computer);
+//     totalDeck_computer = ace_values(computer);
+//     playerCard = values(player);
+//     totalDeck_player = ace_values(player);
+  
+// }
+else if (totalDeck_player > totalDeck_computer)
 {
   return `Player Wins!!!! Congratulations!!! ${winmage}`;
 }
@@ -176,7 +207,7 @@ var blackJack = function ()
   // checking whether each player has 21 in total
   var messages = "";
   
-if(totalDeck_player === 21)
+  if(totalDeck_player === 21)
 {
   messages =  `You Win!!!!!!`;
   gameOver = true;
@@ -187,19 +218,6 @@ else if(totalDeck_computer === 21)
   messages =  `You Win!!!!!!`;
   gameOver = true;
 }
-
-else if (totalDeck_computer > 21)
-{
-  messages = `Computer LOST!!! ${myImage}`;
-  gameOver = false;
-}
-
-else if (totalDeck_player > 21)
-{
-  messages = `player LOST!!! ${myImage}`;
-  gameOver = false;
-}
-
 
   return messages;
 
@@ -222,7 +240,7 @@ var main = function (input) {
       cardMembers(player); // drawing the second card for the player
       playerCard = values(player); // inserting the 2 cards into the playerCard array
       totalDeck_player = ace_values(player); // totalling the sum of the cards in the playerCard
-      var beta = blackJack(); // checking if the sum already hits 21
+       var beta = blackJack(); // checking if the sum already hits 21
 
       computer_card = values(computer); // showing computer card values
       totalDeck_computer = ace_values(computer); // totalling computer cards
@@ -238,13 +256,15 @@ var main = function (input) {
       cardMembers(player); // draw one card for the player
       playerCard = values(player); // adding it up to the array
       totalDeck_player = ace_values(player); // sum up the cards
+      computer_card = values(computer); // showing the card of the computers as well
+      totalDeck_computer = ace_values(computer); // total of the card 
       var beta = blackJack(); // checking if after hitting hit, if the card has 21 
       var aku = winning(); //checking the winning conditions
       console.log(totalDeck_player);
 
       if(!gameOver){
       message = `Player Cards are ${playerCard}. Total Cards : ${totalDeck_player}<br>  
-      Computer Cards are ${computer_card}.  Total Cards : ${totalDeck_computer} <br>  ${beta} <br>`;
+      Computer Cards are ${computer_card}.  Total Cards : ${totalDeck_computer} <br>  ${beta} <br> ${aku}`;
       }
       else {
             message = `Player Cards are ${playerCard}.Total Cards : ${totalDeck_player}<br>  
@@ -255,6 +275,8 @@ var main = function (input) {
     // when player choose to stand, change turn to computer
     if (input == "stand") {
       cardMembers(computer); // draw a card for computer when choose stand
+      playerCard = values(player); // showing player cards
+      totalDeck_player = ace_values(player); // total of the player cards
       computer_card = values(computer); // insert the drawn card to the computer card array
       totalDeck_computer = ace_values(computer); // sum of the new drawncard with the cards in hand
       var beta = blackJack(); // checking blackjack
@@ -268,31 +290,24 @@ var main = function (input) {
             message = `Player Cards are ${playerCard}. Total Cards : ${totalDeck_player}<br>  
       Computer Cards are ${computer_card}.  Total Cards : ${totalDeck_computer}`;
        }
+
     }
   }
-
-
   // when it is computer's turn, draw 2 cards & play game
   if (turn == "computer") {
-
     cardMembers(computer); // first card of computer drawn
-   
-    if (totalDeck_computer <= 17)
-  {
-      cardMembers(computer);
-      computer_card = values(computer);
-      totalDeck_computer = ace_values(computer);
-      var beta = blackJack(); // checking blackjack
+    cardMembers(computer); //second card of computer drawn
+    computer_card = values(computer); // inserting the values into the array
+    totalDeck_computer = ace_values(computer); // total the cards in the current array
+    playerCard = values(player); // shows the player cards
+    totalDeck_player = ace_values(player); // show the total of the player cards
+    var beta = blackJack(); // checking the blackjack 
 
-       message = `Player Cards are ${playerCard}. Total Cards : ${totalDeck_player}<br>  
-       Computer Cards are ${computer_card}.  Total Cards : ${totalDeck_computer} <br> ${beta}`;
-  }
-   
-  
+    message = `Player Cards are ${playerCard}. Total Cards : ${totalDeck_player}<br>  
+    Computer Cards are ${computer_card}.  Total Cards : ${totalDeck_computer} <br> ${beta}`;
     turn = "player";
 
   }
-
 
 return message;
 
